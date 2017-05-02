@@ -1,0 +1,3 @@
+INVITE_CODE = your_invite_code
+DUMMY_GOOGLE_LOGIN = your_google_account
+DUMMY_GOOGLE_PASSWORD = your_google_password
