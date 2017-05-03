@@ -16,13 +16,13 @@
 		IV.a Introduction to scenarios
 		IV.b How to create scenarios
 		IV.c How to make scenarios work properly
+	V. Credits
 	
 
 
 Introduction
 
-This version is for Windows with Google Chrome installed and Python 3.5,
-It requires PIL, Selenium, unittest, shutils in order to work.
+This version is for Linux Ubuntu/Debian with  Python 3.5.
 
 CleverSheep is a testing tool for the LiMA website still in Work In Progress.
 It creates screeshots of the website when it's working how you want it.
@@ -46,12 +46,43 @@ UI testing
 |-credidentials.txt
 |-run_tests.py
 
-In order to run things properly, you need Python 3.5 and PIL, Selenium, unittest, shutils.
 
-If none of this is installed :
-	Install anaconda for Windows w/ Python 3.5
-	Open anaconda prompt
-	Install missing libraries
+The following commands can be copy/paste from the document if needed.
+
+- Then make sure python 3.5 is installed using the following command :
+python3 --version
+
+- If not, install python 3.5 using the following commands :
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install python3 python3.5
+
+- Then install google chrome using these commands :
+sudo apt-get install libxss1 libappindicator1 libindicator7
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+sudo dpkg -i google-chrome*.deb
+sudo apt-get install -f
+
+- Then install xvfb in order to run Chrome in a headless way :
+sudo apt-get install xvfb
+
+- After, you need to install ChromeDriver to control the google chrome window :
+sudo apt-get install unzip
+
+wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
+- Last step, you need to install Selenium and some other dependencies
+sudo apt-get install pip3
+
+pip3 install pyvirtualdisplay selenium
+
+- Now you have everything set up correctly
 
 
 II. How to create sources
@@ -84,6 +115,8 @@ The differencies will be stored in Analysis/percents.txt
 The screenshots will be saved in Tests/t_[DATE]
 
 
+V. Credits
 
-	
+Thanks to Chritopher Su and his tutorial available at :
+https://christopher.su/2015/selenium-chromedriver-ubuntu/	
 	
