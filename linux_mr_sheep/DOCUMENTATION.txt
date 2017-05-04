@@ -38,8 +38,6 @@ UI testing
 |-Analysis/
 | |-percent.txt
 | |-source_percent.txt
-|-Driver/
-| |-chromedriver.exe
 |-Sources/ 
 |-Tests/
 |-create_sources.py
@@ -49,14 +47,22 @@ UI testing
 
 The following commands can be copy/paste from the document if needed.
 
+You can follow the next commands or use the requirements.sh file using :
+
+chmod +x requirements.sh
+./requirements.sh
+
 - Then make sure python 3.5 is installed using the following command :
+
 python3 --version
 
 - If not, install python 3.5 using the following commands :
+
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install python3 python3.5
 
 - Then install google chrome using these commands :
+
 sudo apt-get install libxss1 libappindicator1 libindicator7
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
@@ -64,9 +70,11 @@ sudo dpkg -i google-chrome*.deb
 sudo apt-get install -f
 
 - Then install xvfb in order to run Chrome in a headless way :
+
 sudo apt-get install xvfb
 
 - After, you need to install ChromeDriver to control the google chrome window :
+
 sudo apt-get install unzip
 
 wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
@@ -78,7 +86,8 @@ sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
 - Last step, you need to install Selenium and some other dependencies
-sudo apt-get install pip3
+
+sudo apt-get install python-pip
 
 pip3 install pyvirtualdisplay selenium
 
