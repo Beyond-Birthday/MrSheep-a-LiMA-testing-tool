@@ -725,6 +725,23 @@ def verify() :
     else :
         end()
 
+def usage() :
+    print("Here are the usages for this program :")
+    print()
+    print("-b will use buffer option from unittest")
+    print("-i will show you detailled informations about the current program run")
+    print("-t will hide the sheep title :(")
+    print("-s will run the program in silent mode")
+    print("-v will use a virtual display")
+    print("-h or -u will show you this usage (the help) ...")
+    time.sleep(5)
+    print()
+    print("The program will now quit")
+    print("Goodbye")
+    time.sleep(10)
+    sys.exit(0)
+    
+
 def command_parse() :
     global INFO
     global TITLE
@@ -732,6 +749,8 @@ def command_parse() :
     
     if('-i' in sys.argv) : INFO = True
     elif('-t' in sys.argv) : TITLE = False
+    elif(('-h' in sys.argv) or ('-u' in sys.argv)) :
+        usage()
     elif('-s' in sys.argv) : SILENT = True
     elif('-v' in sys.argv) :
         print("Virtual display activated")
