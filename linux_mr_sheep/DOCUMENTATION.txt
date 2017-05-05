@@ -103,6 +103,8 @@ Here are the options :
 -b to reduce test output
 -v to use virtual display (in order to run on headless machine for example)
 
+/!\ PLEASE NOTE THAT IF YOU USE '-v' FOR CREATING SOURCES, YOU'LL NEED IT TO USE IT FOR THE TESTS AS WELL, OTHERWISE SCREENSHOTS WILL NOT BE TAKEN THE SAME WAY
+
 for example, just run '''python3 create_sources.py -b -i'''
 (without the ''')
 
