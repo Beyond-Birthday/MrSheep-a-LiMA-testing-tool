@@ -8,7 +8,7 @@
 5_misinformation_effect3.png 0.0
 3_Try_a_new_metaanalysis3.png 0.0
 2_log_homepage7.png 0.0
-3_Try_a_new_metaanalysis1.png 2.9825199246969962
+3_Try_a_new_metaanalysis1.png 3.359786799996467
 0_beta_homepage6.png 0.0
 5_misinformation_effect16.png 0.0
 0_beta_homepage1.png 0.0
@@ -58,7 +58,7 @@
 3_Try_a_new_metaanalysis2.png 0.0
 5_misinformation_effect17.png 0.0
 6_simple_testing_metaanalysis5.png 0.0
-4_editing_locally2.png 2.420148778063492
+4_editing_locally2.png 0.0
 0_beta_homepage7.png 0.0
 0_beta_homepage4.png 0.0
 0_beta_homepage15.png 0.0

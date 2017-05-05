@@ -12,6 +12,7 @@ import math, operator
 import os
 from PIL import Image
 from PIL import ImageChops
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.alert import Alert
@@ -70,10 +71,10 @@ def Generate_directory() :
     t = datetime.datetime.date(datetime.datetime.now())
     t.strftime('%d-%m-%Y')
     t = str(t)
-    t = 'Tests\\t_T-'+t
+    t = 'Tests/t_T-'+t
     FOLDER = t
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    dir_path = str(dir_path) + '\\' + t
+    dir_path = str(dir_path) + '/' + t
     DIRECTORY = dir_path
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
@@ -147,12 +148,12 @@ def Generate_foo_name() :
 #--------------FILL TXT W/ PERCENTS----------------------
 
 def fill_analysis(directory_1, directory_2, output) :
-    f = open("Analysis\\" + output, 'r+').truncate()
-    f = open("Analysis\\" + output, 'w')
+    f = open("Analysis/" + output, 'r+').truncate()
+    f = open("Analysis/" + output, 'w')
     
     cwd = os.getcwd()
-    dir1 = cwd + '\\Sources\\' + directory_1
-    dir2 = cwd + '\\Tests\\' + directory_2
+    dir1 = cwd + '/Sources/' + directory_1
+    dir2 = cwd + '/Tests/' + directory_2
     if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
         if(not SILENT) : print("Not the same number of screenshots, trying anyway ...")
         if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :
@@ -190,7 +191,7 @@ def get_max_Y(driver) :
     continu = True
     t = "TEMP"
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    dir_path = str(dir_path) + '\\' + t 
+    dir_path = str(dir_path) + '/' + t 
     if not os.path.exists(dir_path):
         os.makedirs(dir_path)
     driver.refresh()
@@ -198,16 +199,16 @@ def get_max_Y(driver) :
     while(continu) :
         y = y + 1
         driver.execute_script("window.scrollTo(0, "+ str(200*y)+")")
-        path = "TEMP\\temp" + str(y) + ".png"
+        path = "TEMP/temp" + str(y) + ".png"
         driver.save_screenshot(path)
         if(y>1) :
-            rms = compareTwoImages("TEMP\\temp" + str(y-1)+ ".png", "TEMP\\temp" + str(y)+ ".png", "watching")
+            rms = compareTwoImages("TEMP/temp" + str(y-1)+ ".png", "TEMP/temp" + str(y)+ ".png", "watching")
             if(rms == 0.0) : 
                 continu = False
                 driver.execute_script("window.scrollTo(0, 0)")
                 t = "TEMP"
                 dir_path = os.path.dirname(os.path.realpath(__file__))
-                dir_path = str(dir_path) + '\\' + t
+                dir_path = str(dir_path) + '/' + t
                 DIRECTORY = dir_path
                 shutil.rmtree(DIRECTORY, ignore_errors=True) 
                 WIP_SPEED = old_speed
@@ -221,10 +222,11 @@ def get_max_Y(driver) :
     #----------------------------------------------#
     ################################################
 
+
 class TestNScreen(unittest.TestCase):
     
     def setUp(self):
-        self.driver = webdriver.Chrome('Driver/chromedriver.exe') 
+        self.driver = webdriver.Chrome() 
         
         
 
@@ -234,7 +236,7 @@ class TestNScreen(unittest.TestCase):
         global PAGE
         current_screenshot = 1
         #reserve_path = FOLDER + "\\" + PAGE         #TO DO : REMOVE IF NOT NEEDED
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         
         driver = self.driver
         driver.delete_all_cookies()
@@ -247,7 +249,7 @@ class TestNScreen(unittest.TestCase):
         for i in range (0, get_max_Y(driver)+1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
             time.sleep(WIP_SPEED)
-            path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+            path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
             driver.save_screenshot(path)
             current_screenshot = current_screenshot + 1
             
@@ -263,7 +265,7 @@ class TestNScreen(unittest.TestCase):
         elem.send_keys(INVITE_CODE)
         
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         
         elem.send_keys(Keys.RETURN)
@@ -276,7 +278,7 @@ class TestNScreen(unittest.TestCase):
         for i in range (0, 17) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
             time.sleep(WIP_SPEED)
-            path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+            path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
             driver.save_screenshot(path)
             current_screenshot = current_screenshot + 1
             
@@ -290,6 +292,10 @@ class TestNScreen(unittest.TestCase):
         
         driver.find_element_by_link_text("try a new meta-analysis").click()
         driver.refresh()
+        try :
+            Alert(driver).accept()
+        except :
+            print("No alert...")
         
         try:
             WebDriverWait(driver, 10).until(
@@ -301,24 +307,30 @@ class TestNScreen(unittest.TestCase):
             if(not SILENT) : print('< (meep)')
             
             
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
         driver.back()
+        try :
+            Alert(driver).accept()
+        except :
+            print("No alert...")
+
+        try :
+            Alert(driver).dimiss()
+        except :
+            print("No alert...")
+            
+            
         time.sleep(WIP_SPEED)
-        Alert(driver).dismiss()
-        time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
         time.sleep(WIP_SPEED)
-        driver.back()
-        time.sleep(WIP_SPEED)
-        Alert(driver).accept()
-        time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
@@ -341,13 +353,13 @@ class TestNScreen(unittest.TestCase):
             if(not SILENT) : print('< (meep)')
         
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
         time.sleep(WIP_SPEED)
         driver.back()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
@@ -371,7 +383,7 @@ class TestNScreen(unittest.TestCase):
         for i in range (0, get_max_Y(driver)+1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
             time.sleep(WIP_SPEED)
-            path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+            path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
             driver.save_screenshot(path)
             current_screenshot = current_screenshot + 1
             
@@ -380,7 +392,7 @@ class TestNScreen(unittest.TestCase):
         
         time.sleep(WIP_SPEED)
         driver.back()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1  
         
@@ -404,7 +416,7 @@ class TestNScreen(unittest.TestCase):
         for i in range (0, 4) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
             time.sleep(WIP_SPEED)
-            path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+            path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
             driver.save_screenshot(path)
             current_screenshot = current_screenshot + 1
             
@@ -413,7 +425,7 @@ class TestNScreen(unittest.TestCase):
         
         time.sleep(WIP_SPEED)
         driver.back()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1  
         
@@ -441,7 +453,7 @@ class TestNScreen(unittest.TestCase):
         hover = ActionChains(driver).move_to_element(loging)
         hover.perform()
         
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
@@ -453,7 +465,7 @@ class TestNScreen(unittest.TestCase):
         hover.click()
         hover.perform()
         
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
 
@@ -479,7 +491,7 @@ class TestNScreen(unittest.TestCase):
         time.sleep(2)
     
         driver.switch_to_window(limaWindow)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
@@ -489,7 +501,7 @@ class TestNScreen(unittest.TestCase):
         driver.implicitly_wait(3)
         time.sleep(5)
                 
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         
         this_y = get_max_Y(driver)
         if(this_y > 0) :
@@ -505,7 +517,7 @@ class TestNScreen(unittest.TestCase):
         
         time.sleep(3)
         
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
@@ -513,7 +525,7 @@ class TestNScreen(unittest.TestCase):
         title.send_keys("f")
         
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -523,7 +535,7 @@ class TestNScreen(unittest.TestCase):
         time.sleep(WIP_SPEED)
         
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you new')]/section[@id ='metaanalysis']/header/button[contains(@class, 'titlerename editing')]").click()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -531,14 +543,14 @@ class TestNScreen(unittest.TestCase):
         author = driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you new')]/section[@id ='metaanalysis']/div[contains(@class, 'published popupboxtrigger')]/div[contains(@class, 'edithighlight')]/span[contains(@class, 'value editing oneline')]")
         author.send_keys("Mr Sheep")
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
         
         description = driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you new')]/section[@id ='metaanalysis']/p[contains (@class, 'description edithighlight')]/span[contains(@class, 'value editing')]")
         description.send_keys("Mr Sheep's tests")
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -548,13 +560,13 @@ class TestNScreen(unittest.TestCase):
         tag1Edit = driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you new')]/section[@id ='metaanalysis']/header/ul[contains(@class, 'tags empty')]/li[contains(@class, 'new')]/span[contains(@class, 'tag')]")
         tag1Edit.send_keys("Mr Sheep")
         tag1Edit.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
         
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you')]/section[@id = 'metaanalysis']/div[@class = 'experiments']/table[@class = 'experiments']/tbody/tr[@class='add']/th/button[contains(@class, 'add notunpin not-unsaved')]").click()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -563,7 +575,7 @@ class TestNScreen(unittest.TestCase):
         paperName.click()
         paperName.send_keys("Sheep1-f" + Generate_foo_name())
         paperName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -572,7 +584,7 @@ class TestNScreen(unittest.TestCase):
         expName.click()
         expName.send_keys("White sheeps")
         expName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -580,7 +592,7 @@ class TestNScreen(unittest.TestCase):
         expName.clear()
         expName.send_keys("WhiteSheeps")
         expName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(3)
@@ -589,7 +601,7 @@ class TestNScreen(unittest.TestCase):
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing signed-on page-about-you')]").click()
         
         driver.back()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -597,7 +609,7 @@ class TestNScreen(unittest.TestCase):
         time.sleep(15)
  
 #--------------SCENARIO 2 ----------------------
-    def test_scenar2(self) :
+    def not_test_scenar2(self) :
         
         global PAGE
         PAGE = "8_scenar_2_"
@@ -632,7 +644,7 @@ class TestNScreen(unittest.TestCase):
         title.send_keys("f")
         
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -644,7 +656,7 @@ class TestNScreen(unittest.TestCase):
         time.sleep(WIP_SPEED)
         
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you')]/section[@id ='metaanalysis']/header/button[contains(@class, 'titlerename editing')]").click()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -652,14 +664,14 @@ class TestNScreen(unittest.TestCase):
         author = driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you')]/section[@id ='metaanalysis']/div[contains(@class, 'published popupboxtrigger')]/div[contains(@class, 'edithighlight')]/span[contains(@class, 'value editing oneline')]")
         author.send_keys("Mr Sheep")
         time.sleep(WIP_SPEED)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
         
         description = driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you')]/section[@id ='metaanalysis']/p[contains (@class, 'description edithighlight')]/span[contains(@class, 'value editing')]")
         description.send_keys("Mr Sheep's tests")
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -669,14 +681,14 @@ class TestNScreen(unittest.TestCase):
         tag1Edit = driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you')]/section[@id ='metaanalysis']/header/ul[contains(@class, 'tags empty')]/li[contains(@class, 'new')]/span[contains(@class, 'tag')]")
         tag1Edit.send_keys("Mr Sheep")
         tag1Edit.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
         
         
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you')]/section[@id = 'metaanalysis']/div[@class = 'experiments']/table[@class = 'experiments']/tbody/tr[contains(@class, 'add')]/th/button[contains(@class, 'add notunpin not-unsaved')]").click()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
@@ -686,7 +698,7 @@ class TestNScreen(unittest.TestCase):
         paperName.click()
         paperName.send_keys("Sheep1-f" + Generate_foo_name())
         paperName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         
         expName = driver.find_element_by_xpath("/html/body[contains(@class, 'editing new page-about-you boxpinned')]/section[@id = 'metaanalysis']/div[@class = 'experiments']/table[@class = 'experiments']/tbody/tr[contains(@class, 'row paperstart')]/th[contains(@class, 'popupboxtrigger popupboxhighlight experimenttitle pinned')]/div[contains(@class, 'experimentinfo popupbox pinned')]/header/p/span[contains(@class, 'exptitle editing')]")
         expName.click()
@@ -694,7 +706,7 @@ class TestNScreen(unittest.TestCase):
         time.sleep(WIP_SPEED)
         
         expName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -702,21 +714,21 @@ class TestNScreen(unittest.TestCase):
         expName.clear()
         expName.send_keys("WhiteSheeps")
         expName.send_keys(Keys.RETURN)
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
         time.sleep(10)
         
         driver.back()
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
     
         driver.find_element_by_link_text("see the meta-analyses and papers you've edited locally").click()
         time.sleep(WIP_SPEED)
         
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         time.sleep(WIP_SPEED)
@@ -727,10 +739,9 @@ class TestNScreen(unittest.TestCase):
         
         time.sleep(5)
         
-        path = FOLDER + "\\" + PAGE + str(current_screenshot) + ".png"
+        path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
-    
 
     
 #--------------DRIVER QUITTING----------------------
@@ -791,6 +802,11 @@ def command_parse() :
     global SILENT
 
     if('-s' in sys.argv) : SILENT = True
+    elif('-v' in sys.argv) :
+        print("Virtual display activated")
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+
             
 
 #--------------LAUNCH----------------------
