@@ -101,6 +101,7 @@ Here are the options :
 -i to get all the infos
 -s to run silent mode
 -b to reduce test output
+-v to use virtual display (in order to run on headless machine for example)
 
 for example, just run '''python3 create_sources.py -b -i'''
 (without the ''')
