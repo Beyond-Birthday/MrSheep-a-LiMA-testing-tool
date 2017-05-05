@@ -15,7 +15,6 @@ You can also create tests yourself by following the documentation available in e
 **What are the requirements for these programs ?**
 
 You'll need to learn the basics in Python 3 / Python 3.5 / xpath
-> Note that a xpath 101 text file is available at the root of the project.
 
 You'll also need to follow the documentation on each folder.
 
