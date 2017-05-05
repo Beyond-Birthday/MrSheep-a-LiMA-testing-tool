@@ -96,13 +96,13 @@ pip3 install pyvirtualdisplay selenium
 
 II. How to create sources
 
-In order to create sources, you need run create_sources.py in Spyder or in the Windows' cmd
+In order to create sources, you need run create_sources.py with python 3
 Here are the options :
 -i to get all the infos
 -s to run silent mode
 -b to reduce test output
 
-for example, just run '''python create_sources.py -b -i'''
+for example, just run '''python3 create_sources.py -b -i'''
 (without the ''')
 
 The program will run tests twice to get a scale for the differencies.
@@ -111,12 +111,12 @@ The screenshots will be saved in Sources/s_[DATE] and in Sources/f_[DATE]
 
 III. How to make tests
 
-In order to create sources, you need run create_sources.py in Spyder or in the Windows' cmd
+In order to create sources, you need run create_sources.py with python 3
 Here are the options :
 -s to run silent mode
 -b to reduce test output
 
-for example, just run '''python run_tests.py -b'''
+for example, just run '''python3 run_tests.py -b'''
 (without the ''')
 
 The program will take screenshots and compare them to the source ones.
@@ -127,5 +127,6 @@ The screenshots will be saved in Tests/t_[DATE]
 V. Credits
 
 Thanks to Chritopher Su and his tutorial available at :
+
 https://christopher.su/2015/selenium-chromedriver-ubuntu/	
 	

@@ -272,6 +272,10 @@ class TestNScreen(unittest.TestCase):
         
         driver.find_element_by_link_text("try a new meta-analysis").click()
         driver.refresh()
+        try :
+            Alert(driver).accept()
+        except :
+            print("No alert...")
         
         try:
             WebDriverWait(driver, 10).until(
@@ -288,17 +292,23 @@ class TestNScreen(unittest.TestCase):
         current_screenshot = current_screenshot + 1
         
         driver.back()
+        try :
+            Alert(driver).accept()
+        except :
+            print("No alert...")
+
+        try :
+            Alert(driver).dimiss()
+        except :
+            print("No alert...")
+            
+            
         time.sleep(WIP_SPEED)
-        Alert(driver).dismiss()
-        time.sleep(WIP_SPEED)
+        
         path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
         current_screenshot = current_screenshot + 1
         
-        time.sleep(WIP_SPEED)
-        driver.back()
-        time.sleep(WIP_SPEED)
-        Alert(driver).accept()
         time.sleep(WIP_SPEED)
         path = FOLDER + "/" + PAGE + str(current_screenshot) + ".png"
         driver.save_screenshot(path)
@@ -768,9 +778,7 @@ def main() :
     TRIGGER = 0    
     start_timer()
     get_credidentials()
-    display = Display(visible=0, size=(800, 600))
-    display.start()
-
+    
 #    Generate_directory(1)
 #    while(len(os.listdir("Sources/" + find_lastest_dir(1)))< OBJ_SCREENSHOT) :
 #        if(PROGRAM_TRY >= 10):
@@ -827,6 +835,11 @@ def command_parse() :
     if('-i' in sys.argv) : INFO = True
     elif('-t' in sys.argv) : TITLE = False
     elif('-s' in sys.argv) : SILENT = True
+    elif('-v' in sys.argv) :
+        print("Virtual display activated")
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+
             
 
 #--------------LAUNCH----------------------
