@@ -2,16 +2,18 @@
 2_log_homepage2.png 0.0
 2_log_homepage6.png 0.0
 2_log_homepage10.png 0.0
+2_log_homepage20.png 0.0
 2_log_homepage11.png 0.0
 2_log_homepage15.png 0.0
 2_log_homepage9.png 0.0
 5_misinformation_effect3.png 0.0
 3_Try_a_new_metaanalysis3.png 0.0
 2_log_homepage7.png 0.0
-3_Try_a_new_metaanalysis1.png 3.359786799996467
+2_log_homepage19.png 0.0
+3_Try_a_new_metaanalysis1.png 2.0134594342542176
 0_beta_homepage6.png 0.0
 5_misinformation_effect16.png 0.0
-0_beta_homepage1.png 0.0
+0_beta_homepage1.png 1.6225261455882334
 5_misinformation_effect12.png 0.0
 1_logging_in1.png 0.0
 5_misinformation_effect6.png 0.0
@@ -27,6 +29,7 @@
 0_beta_homepage8.png 0.0
 5_misinformation_effect8.png 0.0
 6_simple_testing_metaanalysis3.png 0.0
+2_log_homepage18.png 0.0
 2_log_homepage12.png 0.0
 5_misinformation_effect11.png 0.0
 5_misinformation_effect1.png 0.0
@@ -34,7 +37,7 @@
 2_log_homepage4.png 0.0
 0_beta_homepage14.png 0.0
 5_misinformation_effect9.png 0.0
-0_beta_homepage2.png 0.0
+0_beta_homepage2.png 1.6225261455882334
 6_simple_testing_metaanalysis1.png 0.0
 0_beta_homepage18.png 0.0
 2_log_homepage17.png 0.0

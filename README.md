@@ -1,4 +1,4 @@
-# MrSheep-a-LiMA-testing-tool
+# MrSheep : a LiMA testing tool
 
 **Mr Sheep is a testing tool available on both Linux and Windows**
 
@@ -17,6 +17,10 @@ You can also create tests yourself by following the documentation available in e
 You'll need to learn the basics in Python 3 / Python 3.5 / xpath
 
 You'll also need to follow the documentation on each folder.
+
+**What if I have problems/issues ?**
+
+Just create an issue in Github or post a Pull Request.
 
 **Why Mr Sheep ?**
 
