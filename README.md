@@ -22,7 +22,7 @@ You'll also need to follow the documentation on each folder.
 
 Just create an issue in Github or post a Pull Request.
 
-**What will be done next ? **
+**What will be done next ?**
 
 Next, you'll have one class for each test and the possibility to load them via the command line.
 In fact, you'll have something like that :
