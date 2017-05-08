@@ -747,16 +747,15 @@ def command_parse() :
     global TITLE
     global SILENT
     
-    if(('-h' in sys.argv) or ('-u' in sys.argv)) :
-	usage()
+    if(('-h' in sys.argv) or ('-u' in sys.argv)) : usage()
     else :
-	if('-i' in sys.argv) : INFO = True
-    	if('-t' in sys.argv) : TITLE = False
-    	if('-v' in sys.argv) :
+        if('-i' in sys.argv) : INFO = True
+        if('-t' in sys.argv) : TITLE = False
+        if('-v' in sys.argv) :
             print("Virtual display activated")
             display = Display(visible=0, size=(800, 600))
             display.start()
-	if('-s' in sys.argv) : SILENT = True
+        if('-s' in sys.argv) : SILENT = True
             
 
 #--------------LAUNCH----------------------
