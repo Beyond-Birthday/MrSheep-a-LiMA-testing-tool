@@ -1,3 +1,3 @@
-INVITE_CODE = 24146a0b3f2e
-DUMMY_GOOGLE_LOGIN = mister.sheep2017@gmail.com
-DUMMY_GOOGLE_PASSWORD = MeepMeepI'masheep
+INVITE_CODE = your_invite_code
+DUMMY_GOOGLE_LOGIN = your_google_account
+DUMMY_GOOGLE_PASSWORD = your_google_password
