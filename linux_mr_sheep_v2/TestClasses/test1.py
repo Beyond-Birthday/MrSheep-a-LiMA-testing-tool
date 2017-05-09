@@ -18,6 +18,7 @@ import time
 import unittest
 
 from MrSheepToolbox import WebDriverTools as mslWDT
+from MrSheepToolbox import Tools as mslT
 
 INVITE_CODE = ""
 DUMMY_GOOGLE_LOGIN = ""
@@ -40,7 +41,7 @@ def get_credidentials() :
     #----------------------------------------------#
     ################################################
 
-class TestNScreen(unittest.TestCase):
+class TestClass(unittest.TestCase):
     
     def setUp(self):
         self.driver = webdriver.Chrome() 
@@ -59,7 +60,7 @@ class TestNScreen(unittest.TestCase):
         
         for i in range (0, mslWDT.get_max_Y(driver)+1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
-            msl.take_screenshot(driver)
+            mslWDT.take_screenshot(driver)
             
         driver.execute_script("window.scrollTo(0, 0)")
         time.sleep(WIP_SPEED)
@@ -70,16 +71,16 @@ class TestNScreen(unittest.TestCase):
         elem = driver.find_element_by_id("invitecode")
         elem.send_keys(INVITE_CODE)
         
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
         elem.send_keys(Keys.RETURN)
         
         PAGE = "2_log_homepage"
         #-- HOMEPAGE (logged) --
         
-        for i in range (0, get_max_Y(driver) + 1) :
+        for i in range (0, mslWDT.get_max_Y(driver) + 1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
-            msl.take_screenshot(driver)
+            mslWDT.take_screenshot(driver)
             
         driver.execute_script("window.scrollTo(0, 0)")
         time.sleep(WIP_SPEED)
@@ -103,7 +104,7 @@ class TestNScreen(unittest.TestCase):
             print('error loading static content')
             
             
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         driver.back()
 
         try :
@@ -117,7 +118,7 @@ class TestNScreen(unittest.TestCase):
             print("No alert...")
             
             
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
         PAGE = "4_editing_locally"
         #-- see edited meta analyses and papers --
@@ -134,10 +135,10 @@ class TestNScreen(unittest.TestCase):
             #driver.refresh()
             if(not SILENT) : print('< (meep)')
         
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
         driver.back()
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
         PAGE = "5_misinformation_effect"
         #-- See misinformation paper --

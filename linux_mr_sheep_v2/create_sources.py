@@ -25,6 +25,8 @@ import sys
 import time
 import unittest
 
+from TestClasses.MrSheepToolbox import Tools as mstt
+
 
 STARTING_TIME = 0
 TRIGGER = 0
@@ -63,11 +65,6 @@ def title() :
 def Generate_foo_name() :
     date = datetime.datetime.now()
     return str("oo-"+ str(date.year) +"-" +str(date.month) +"-" + str(date.day) +"--" + str(date.hour) +"-"+ str(date.minute) +"-"+ str(date.second))
-   
-
-
-
-
             
 #--------------SHOW OUTPUT TO USER----------------------
 
@@ -188,6 +185,7 @@ def command_parse() :
         if('-s' in sys.argv) : SILENT = True
     for i in sys.argv :
         if(i != sys.argv[0]) :
+            #TO CHANGE maybe a tab, or something
             x = __import__(i)
             
 
@@ -196,6 +194,8 @@ def command_parse() :
 if __name__ == "__main__":
     sys.path.insert(0, 'TestClasses/')
     command_parse()
-    suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestNScreen)
+    mstt.Generate_directory(1)
+    #TO CHANGE
+    suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestClass)
     unittest.TextTestRunner(verbosity=2).run(suite)
     
