@@ -1,0 +1,135 @@
+  _____                                        _        _   _             
+ |  __ \                                      | |      | | (_)            
+ | |  | | ___   ___ _   _ _ __ ___   ___ _ __ | |_ __ _| |_ _  ___  _ __  
+ | |  | |/ _ \ / __| | | | '_ ` _ \ / _ \ '_ \| __/ _` | __| |/ _ \| '_ \ 
+ | |__| | (_) | (__| |_| | | | | | |  __/ | | | || (_| | |_| | (_) | | | |
+ |_____/ \___/ \___|\__,_|_| |_| |_|\___|_| |_|\__\__,_|\__|_|\___/|_| |_|
+                                                                          
+                                                                          
+	SUMMARY
+
+	Introduction
+	I. How to Install
+	II. How to create sources
+	III. How to make tests
+	IV. Scenarios
+		IV.a Introduction to scenarios
+		IV.b How to create scenarios
+		IV.c How to make scenarios work properly
+	V. Credits
+	
+
+
+Introduction
+
+This version is for Linux Ubuntu/Debian with  Python 3.5.
+
+CleverSheep is a testing tool for the LiMA website still in Work In Progress.
+It creates screeshots of the website when it's working how you want it.
+Then it compares these to new ones after an update, a change, an edit etc...
+It compute the differencies between two screenshots and list all the differencies.
+
+I. How to install
+
+First, clone the Github repository
+Then you'll have something like this :
+
+UI testing
+|-Analysis/
+| |-percent.txt
+| |-source_percent.txt
+|-Sources/ 
+|-Tests/
+|-create_sources.py
+|-credidentials.txt
+|-run_tests.py
+
+
+The following commands can be copy/paste from the document if needed.
+
+You can follow the next commands or use the requirements.sh file using :
+
+chmod +x requirements.sh
+./requirements.sh
+
+- Then make sure python 3.5 is installed using the following command :
+
+python3 --version
+
+- If not, install python 3.5 using the following commands :
+
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install python3 python3.5
+
+- Then install google chrome using these commands :
+
+sudo apt-get install libxss1 libappindicator1 libindicator7
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+sudo dpkg -i google-chrome*.deb
+sudo apt-get install -f
+
+- Then install xvfb in order to run Chrome in a headless way :
+
+sudo apt-get install xvfb
+
+- After, you need to install ChromeDriver to control the google chrome window :
+
+sudo apt-get install unzip
+
+wget -N http://chromedriver.storage.googleapis.com/2.26/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
+- Last step, you need to install Selenium and some other dependencies
+
+sudo apt-get install python-pip
+
+pip3 install pyvirtualdisplay selenium
+
+- Now you have everything set up correctly
+
+
+II. How to create sources
+
+In order to create sources, you need run create_sources.py with python 3
+Here are the options :
+-i to get all the infos
+-s to run silent mode
+-b to reduce test output
+-v to use virtual display (in order to run on headless machine for example)
+
+/!\ PLEASE NOTE THAT IF YOU USE '-v' FOR CREATING SOURCES, YOU'LL NEED IT TO USE IT FOR THE TESTS AS WELL, OTHERWISE SCREENSHOTS WILL NOT BE TAKEN THE SAME WAY
+
+for example, just run '''python3 create_sources.py -b -i'''
+(without the ''')
+
+The program will run tests twice to get a scale for the differencies.
+The differencies will be stored in Analysis/source_percent.txt
+The screenshots will be saved in Sources/s_[DATE] and in Sources/f_[DATE]
+
+III. How to make tests
+
+In order to create sources, you need run create_sources.py with python 3
+Here are the options :
+-s to run silent mode
+-b to reduce test output
+
+for example, just run '''python3 run_tests.py -b'''
+(without the ''')
+
+The program will take screenshots and compare them to the source ones.
+The differencies will be stored in Analysis/percents.txt
+The screenshots will be saved in Tests/t_[DATE]
+
+
+V. Credits
+
+Thanks to Chritopher Su and his tutorial available at :
+
+https://christopher.su/2015/selenium-chromedriver-ubuntu/	
+	
