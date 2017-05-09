@@ -46,9 +46,6 @@ class Tools() :
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
 
-
-
-
     def compareTwoImages(pathToImgTest, pathToImgSource, mode) :   
         global TRIGGER
         rms = 0    
@@ -137,7 +134,7 @@ class WebDriverTools() :
             path = dir_path+ str(y) + ".png"
             driver.save_screenshot(path)
             if(y>1) :
-                rms = compareTwoImages(dir_path + str(y-1)+ ".png", dir_path + str(y)+ ".png", "watching")
+                rms = Tools.compareTwoImages(dir_path + str(y-1)+ ".png", dir_path + str(y)+ ".png", "watching")
                 if(rms == 0.0) : 
                     continu = False
                     driver.execute_script("window.scrollTo(0, 0)")

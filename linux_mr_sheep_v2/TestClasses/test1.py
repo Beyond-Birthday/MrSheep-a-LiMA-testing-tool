@@ -17,13 +17,16 @@ import sys
 import time
 import unittest
 
-import MrSheepLib as msl
+from MrSheepToolbox import WebDriverTools as mslWDT
 
-
+INVITE_CODE = ""
+DUMMY_GOOGLE_LOGIN = ""
+DUMMY_GOOGLE_PASSWORD = ""
 
 def get_credidentials() :
     global INVITE_CODE, DUMMY_GOOGLE_LOGIN, DUMMY_GOOGLE_PASSWORD
-    lines = [line.rstrip('\n') for line in open('credidentials.txt')]
+    
+    lines = [line.rstrip('\n') for line in open(os.getcwd() + '/credidentials.txt')]
     INVITE_CODE = lines[0].split(" ")[2]
     DUMMY_GOOGLE_LOGIN = lines[1].split(" ")[2]
     DUMMY_GOOGLE_PASSWORD = lines[2].split(" ")[2]
@@ -41,12 +44,11 @@ class TestNScreen(unittest.TestCase):
     
     def setUp(self):
         self.driver = webdriver.Chrome() 
-        
-        
 
 #--------------BASIC TESTS----------------------
 
     def test_basics(self):
+        get_credidentials()
         driver = self.driver
         driver.delete_all_cookies()
         driver.get('https://lima.soc.port.ac.uk/')
@@ -55,7 +57,7 @@ class TestNScreen(unittest.TestCase):
         #-- HOMEPAGE --
         
         
-        for i in range (0, msl.get_max_Y(driver)+1) :
+        for i in range (0, mslWDT.get_max_Y(driver)+1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
             msl.take_screenshot(driver)
             
