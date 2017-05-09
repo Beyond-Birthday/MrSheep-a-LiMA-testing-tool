@@ -122,22 +122,22 @@ class WebDriverTools() :
         y = 0
         continu = True
         dir_path = os.path.dirname(os.path.realpath(__file__))
-        dir_path = str(dir_path) + '/TEMP'
+        dir_path = str(dir_path) + '/TEMP/'
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         driver.refresh()
-        dir_path += "/TEMP"
         
         while(continu) :
             y = y + 1
             driver.execute_script("window.scrollTo(0, "+ str(200*y)+")")
-            path = dir_path+ str(y) + ".png"
+            path = dir_path + "/temp"+ str(y) + ".png"
             driver.save_screenshot(path)
             if(y>1) :
-                rms = Tools.compareTwoImages(dir_path + str(y-1)+ ".png", dir_path + str(y)+ ".png", "watching")
+                rms = Tools.compareTwoImages(dir_path + "/temp"+ str(y-1) + ".png", dir_path + "/temp"+ str(y) + ".png", "watching")
                 if(rms == 0.0) : 
                     continu = False
                     driver.execute_script("window.scrollTo(0, 0)")
+                    print(dir_path)
                     shutil.rmtree(dir_path, ignore_errors=True) 
                     WIP_SPEED = old_speed
                     return y-1
