@@ -24,9 +24,10 @@ import shutil
 import sys
 import time
 import unittest
+import TestClasses.MrSheepToolbox
 
-from TestClasses.MrSheepToolbox import Tools as mstt
-
+mslWDT =  TestClasses.MrSheepToolbox.WebDriverTools()
+mslT =  TestClasses.MrSheepToolbox.Tools()
 
 STARTING_TIME = 0
 TRIGGER = 0
@@ -194,7 +195,7 @@ def command_parse() :
 if __name__ == "__main__":
     sys.path.insert(0, 'TestClasses/')
     command_parse()
-    mstt.Generate_directory(1)
+    mslT.Generate_directory(1)
     #TO CHANGE
     suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestClass)
     unittest.TextTestRunner(verbosity=2).run(suite)

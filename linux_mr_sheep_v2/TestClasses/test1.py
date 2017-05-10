@@ -17,8 +17,9 @@ import sys
 import time
 import unittest
 
-from MrSheepToolbox import WebDriverTools as mslWDT
-from MrSheepToolbox import Tools as mslT
+import MrSheepToolbox
+#from MrSheepToolbox import WebDriverTools as mslWDT
+#from MrSheepToolbox import Tools as mslT
 
 INVITE_CODE = ""
 DUMMY_GOOGLE_LOGIN = ""
@@ -41,9 +42,15 @@ def get_credidentials() :
     #----------------------------------------------#
     ################################################
 
+mslWDT = MrSheepToolbox.WebDriverTools()
+mslT = MrSheepToolbox.Tools()
+mslT.Init_directory()
+
+
 class TestClass(unittest.TestCase):
     
     def setUp(self):
+        
         self.driver = webdriver.Chrome() 
 
 #--------------BASIC TESTS----------------------
@@ -54,7 +61,7 @@ class TestClass(unittest.TestCase):
         driver.delete_all_cookies()
         driver.get('https://lima.soc.port.ac.uk/')
         
-        PAGE = "0_beta_homepage"
+        mslT.Set_Current_Page("0_beta_homepage")
         #-- HOMEPAGE --
         
         
@@ -63,9 +70,9 @@ class TestClass(unittest.TestCase):
             mslWDT.take_screenshot(driver)
             
         driver.execute_script("window.scrollTo(0, 0)")
-        time.sleep(WIP_SPEED)
-        
-        PAGE = "1_logging_in"
+        time.sleep(0.2)
+         
+        mslT.Set_Current_Page("1_logging_in")
         #-- HOMEPAGE (login) --
 
         elem = driver.find_element_by_id("invitecode")

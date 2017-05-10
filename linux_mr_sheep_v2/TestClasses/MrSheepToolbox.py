@@ -17,20 +17,67 @@ import sys
 import time
 import unittest
 
-INVITE_CODE = ""
-DUMMY_GOOGLE_LOGIN = ""
-DUMMY_GOOGLE_PASSWORD = ""
+
 DIRECTORY = ""
 FOLDER = ""
 PAGE = ""
 WIP_SPEED = 0.2
 OBJ_SCREENSHOT = 61
-CURRENT_SCREENSHOT = 0
+CURRENT_SCREENSHOT = 0  
 
 #-----TOOL CLASS--------------------------------------------------------------
 
 class Tools() :
-    def Generate_directory(mode) :
+    
+    DIRECTORY = ""
+    FOLDER = ""
+    PAGE = ""
+    WIP_SPEED = 0.2
+    OBJ_SCREENSHOT = 61
+    CURRENT_SCREENSHOT = 0  
+    
+    def Set_Current_Page(self, page) :
+        global PAGE
+        global CURRENT_SCREENSHOT
+        CURRENT_SCREENSHOT = 0
+        PAGE = page
+        
+    def Get_Current_Page(self) :
+        return PAGE
+    
+    def Set_Speed(self, speed) :
+        global WIP_SPEED
+        WIP_SPEED = speed
+        return 0
+    
+    def Get_Speed(self) :
+        return WIP_SPEED
+    
+    def Init_directory(self) :
+        global DIRECTORY
+        global FOLDER
+        t = datetime.datetime.now()
+        t = datetime.datetime.date(datetime.datetime.now())
+        t.strftime('%d-%m-%Y')
+        t = str(t)
+        t = '../Sources/f_S-'+t
+        FOLDER = t
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        dir_path = str(dir_path) + '/' + t
+        DIRECTORY = dir_path
+        if not os.path.exists(dir_path):
+            t = datetime.datetime.now()
+            t = datetime.datetime.date(datetime.datetime.now())
+            t.strftime('%d-%m-%Y')
+            t = str(t)
+            t = '../Sources/s_S-'+t
+            FOLDER = t
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            dir_path = str(dir_path) + '/' + t
+            DIRECTORY = dir_path
+        print(DIRECTORY)
+    
+    def Generate_directory(self, mode) :
         global DIRECTORY
         global FOLDER
         t = datetime.datetime.now()
@@ -45,6 +92,7 @@ class Tools() :
         DIRECTORY = dir_path
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
+        print(DIRECTORY)
 
     def compareTwoImages(pathToImgTest, pathToImgSource, mode) :   
         global TRIGGER
@@ -113,7 +161,7 @@ class Tools() :
 
 class WebDriverTools() :
     
-    def get_max_Y(driver) :
+    def get_max_Y(self, driver) :
         global WIP_SPEED
     
         old_speed = WIP_SPEED
@@ -137,7 +185,6 @@ class WebDriverTools() :
                 if(rms == 0.0) : 
                     continu = False
                     driver.execute_script("window.scrollTo(0, 0)")
-                    print(dir_path)
                     shutil.rmtree(dir_path, ignore_errors=True) 
                     WIP_SPEED = old_speed
                     return y-1
@@ -145,10 +192,10 @@ class WebDriverTools() :
         return 0
     
     
-    def take_screenshot(driver) :
+    def take_screenshot(self, driver) :
         global CURRENT_SCREENSHOT
         time.sleep(WIP_SPEED)
-        path = FOLDER + "/" + PAGE + str(CURRENT_SCREENSHOT) + ".png"
+        path = DIRECTORY + "/" + PAGE + str(CURRENT_SCREENSHOT) + ".png"
         driver.save_screenshot(path)
         CURRENT_SCREENSHOT = CURRENT_SCREENSHOT + 1
         time.sleep(WIP_SPEED)
