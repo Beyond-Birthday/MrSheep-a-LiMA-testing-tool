@@ -140,7 +140,7 @@ def main() :
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
-    elif(MODE = "SOURCE") :
+    elif(MODE == "SOURCE") :
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
