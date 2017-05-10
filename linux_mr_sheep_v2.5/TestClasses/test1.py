@@ -35,6 +35,7 @@ class TestClass(unittest.TestCase):
         driver = self.driver
         driver.get('https://lima.soc.port.ac.uk/')
         toolbox.take_screenshot(driver)
+        toolbox.get_max_Y(driver)
         toolbox.take_screenshot(driver)
         toolbox.set_current_title("test")
         toolbox.take_screenshot(driver)

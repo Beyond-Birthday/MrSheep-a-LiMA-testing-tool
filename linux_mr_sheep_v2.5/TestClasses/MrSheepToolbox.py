@@ -74,7 +74,54 @@ class Toolbox() :
     def take_screenshot(self, driver) :
         global CURRENT_SCREENSHOT
         time.sleep(SPEED)
-        path = SCREENSHOT_DIRECTORY + "/" + PAGE + str(CURRENT_SCREENSHOT) + ".png"
+        path = SCREENSHOT_DIRECTORY + "/" + TITLE + str(CURRENT_SCREENSHOT) + ".png"
         driver.save_screenshot(path)
         CURRENT_SCREENSHOT = CURRENT_SCREENSHOT + 1
         time.sleep(SPEED)
+        
+    def get_max_Y(self, driver) :
+        global SPEED
+    
+        old_speed = SPEED
+        SPEED = 0.01
+    
+        y = 0
+        continu = True
+        dir_path = MAIN_DIRECTORY + '/TEMP/'
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+        driver.refresh()
+        
+        while(continu) :
+            y = y + 1
+            driver.execute_script("window.scrollTo(0, "+ str(200*y)+")")
+            path = dir_path + "/temp"+ str(y) + ".png"
+            driver.save_screenshot(path)
+            if(y>1) :
+                rms = self.compareTwoImages(dir_path + "/temp"+ str(y-1) + ".png", dir_path + "/temp"+ str(y) + ".png", "watching")
+                if(rms == 0.0) : 
+                    continu = False
+                    driver.execute_script("window.scrollTo(0, 0)")
+                    shutil.rmtree(dir_path, ignore_errors=True) 
+                    SPEED = old_speed
+                    return y-1
+        SPEED = old_speed
+        return 0
+    
+    
+    #---------------IMAGE PROCESSING PART ----------------
+    
+    def compareTwoImages(self, pathToImgTest, pathToImgSource, mode) :   
+        rms = 0    
+        imgTest = Image.open(pathToImgTest)
+        imgSource = Image.open(pathToImgSource)
+        h = ImageChops.difference(imgTest, imgSource).histogram()
+        rms =  math.sqrt(reduce(operator.add,
+            map(lambda h, i: h*(i**2), h, range(256))
+        ) / (float(imgTest.size[0]) * imgTest.size[1]))    
+        imgTest.close()
+        imgSource.close()    
+        if(mode == "watching") :
+            return rms
+        elif(mode == "analysis" ) :    
+            return rms
