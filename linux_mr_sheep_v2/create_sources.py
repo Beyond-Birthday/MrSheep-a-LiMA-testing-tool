@@ -27,6 +27,8 @@ INFO = False
 SILENT = False
 TITLE = True
 
+IMPORTS = []
+
 
 def title() :
     if(SILENT == False and TITLE == True) :
@@ -133,23 +135,39 @@ def usage() :
     sys.exit(0)
     
 
+def list_test_classes() :
+    for i in os.listdir('TestClasses/') :
+        if 'test' in i : print(i[:(len(i)-3)])
+        
+def find_test_class(name) :
+    for i in os.listdir('TestClasses/') :
+        if ('test' in i and i[:(len(i)-3)] == name) :
+            return True
+    return False
+
 def command_parse() :
     global INFO
     global TITLE
     global SILENT
     
+    list_test_classes()
+    
     if(('-h' in sys.argv) or ('-u' in sys.argv)) : usage()
     else :
-        if('-i' in sys.argv) : INFO = True
         if('-t' in sys.argv) : TITLE = False
         if('-v' in sys.argv) :
             print("Virtual display activated")
             display = Display(visible=0, size=(800, 600))
             display.start()
-        if('-s' in sys.argv) : SILENT = True
+        if('-l' in sys.argv) : list_test_classes()
     for i in sys.argv :
-        if(i != sys.argv[0]) :
-            x = __import__(i)
+        if(i != sys.argv[0] and len(i) > 3) :
+            if(find_test_class(i)) :
+                suite = unittest.TestLoader().loadTestsFromTestCase(__import__(i).TestClass)
+                unittest.TextTestRunner(verbosity=2).run(suite)
+            else :
+                print("testClass not found : " + i)
+            IMPORTS.append(i)
             
 
 #--------------LAUNCH----------------------
@@ -159,6 +177,6 @@ if __name__ == "__main__":
     command_parse()
     mslT.Generate_directory(1)
     #TO CHANGE
-    suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestClass)
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    #suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestClass)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
     
