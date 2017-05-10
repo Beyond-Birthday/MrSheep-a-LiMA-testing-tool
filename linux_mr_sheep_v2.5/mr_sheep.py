@@ -40,7 +40,6 @@ class sheepUtils():
         for i in TEST_CLASSES :
             directory = directory + "-" + i
         directory = 'Results/'+directory
-        print(directory)
         dir_path = os.path.dirname(os.path.realpath(__file__))
         dir_path = str(dir_path) + '/' + directory
         if not os.path.exists(dir_path):
@@ -52,7 +51,6 @@ class sheepUtils():
                 new_path = dir_path + "(" + str(i) + ")"
                 i += 1
             os.makedirs(new_path)
-        print(max([os.path.join("Results/",d) for d in os.listdir("Results/")], key=os.path.getmtime))
 
 
 

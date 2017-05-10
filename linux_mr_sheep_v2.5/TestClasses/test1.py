@@ -11,7 +11,7 @@ import os
 import MrSheepToolbox
 
 toolbox = MrSheepToolbox.Toolbox()
-toolbox.init1()
+toolbox.init1(os.path.basename(__file__))
 
 
 

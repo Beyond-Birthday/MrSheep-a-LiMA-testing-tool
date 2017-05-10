@@ -21,6 +21,7 @@ import unittest
 MODE = ""
 MAIN_DIRECTORY = ""
 SCREENSHOT_DIRECTORY = ""
+CURRENT_FILE_NAME = ""
 
 TITLE = "default"
 CURRENT_SCREENSHOT = 0
@@ -38,8 +39,9 @@ class Toolbox() :
     def get_last_dir(self) :
         return (max([os.path.join("Results/",d) for d in os.listdir("Results/")], key=os.path.getmtime))
 
-    def init1(self) :
-        global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY
+    def init1(self, filename) :
+        global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME
+        CURRENT_FILE_NAME = filename.split(".")[0]
         MODE = self.get_mode()
         if(MODE == "RUN") :
             print("run")
@@ -74,7 +76,7 @@ class Toolbox() :
     def take_screenshot(self, driver) :
         global CURRENT_SCREENSHOT
         time.sleep(SPEED)
-        path = SCREENSHOT_DIRECTORY + "/" + TITLE + str(CURRENT_SCREENSHOT) + ".png"
+        path = SCREENSHOT_DIRECTORY + "/" + CURRENT_FILE_NAME + "-" +TITLE + str(CURRENT_SCREENSHOT) + ".png"
         driver.save_screenshot(path)
         CURRENT_SCREENSHOT = CURRENT_SCREENSHOT + 1
         time.sleep(SPEED)
