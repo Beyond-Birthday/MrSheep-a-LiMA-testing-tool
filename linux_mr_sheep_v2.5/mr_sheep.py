@@ -13,10 +13,6 @@ import shutil
 import sys
 import time
 import unittest
-import TestClasses.MrSheepToolbox
-
-mslWDT =  TestClasses.MrSheepToolbox.WebDriverTools()
-mslT =  TestClasses.MrSheepToolbox.Tools()
 
 TITLE = True
 TEST_CLASSES = []
