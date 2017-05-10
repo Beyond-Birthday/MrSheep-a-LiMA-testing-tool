@@ -56,8 +56,7 @@ class sheepUtils():
                 new_path = dir_path + "(" + str(i) + ")"
                 i += 1
             os.makedirs(new_path)
-        
-
+        print(max([os.path.join("Results/",d) for d in os.listdir("Results/")], key=os.path.getmtime))
 
 
 
@@ -133,6 +132,22 @@ def main() :
     title()
     utils.Generate_directory()
     
+    if(MODE == "RUN" ) :
+        for tClass in TEST_CLASSES :
+            suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
+            unittest.TextTestRunner(verbosity=2).run(suite)
+    elif(MODE == "COMPARE") :
+        for tClass in TEST_CLASSES :
+            suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
+            unittest.TextTestRunner(verbosity=2).run(suite)
+    elif(MODE = "SOURCE") :
+        for tClass in TEST_CLASSES :
+            suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
+            unittest.TextTestRunner(verbosity=2).run(suite)
+    else :
+        print("UNKNOW MODE ERROR : Please contact the author")
+        sys.exit(0)
+        
 
 
 if __name__ == "__main__":
