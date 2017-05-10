@@ -7,19 +7,8 @@ Created on Fri Apr 21 12:27:58 2017
 
 #--------------IMPORTS----------------------
 import datetime
-from functools import reduce
-import math, operator
 import os
-from PIL import Image
-from PIL import ImageChops
 from pyvirtualdisplay import Display
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 import shutil
 import sys
 import time
@@ -56,16 +45,6 @@ def title() :
 ################################################
                      """)
 
-    
-#--------------GENERATE DIRECTORIES----------------------
-
-
-
-#--------------GENERATE FOO NAME FOR METAANALYSIS----------------------
-      
-def Generate_foo_name() :
-    date = datetime.datetime.now()
-    return str("oo-"+ str(date.year) +"-" +str(date.month) +"-" + str(date.day) +"--" + str(date.hour) +"-"+ str(date.minute) +"-"+ str(date.second))
             
 #--------------SHOW OUTPUT TO USER----------------------
 
@@ -103,22 +82,6 @@ def main() :
     PROGRAM_TRY = PROGRAM_TRY + 1
     TRIGGER = 0    
     start_timer()
-    get_credidentials()
-    
-#    Generate_directory(1)
-#    while(len(os.listdir("Sources/" + find_lastest_dir(1)))< OBJ_SCREENSHOT) :
-#        if(PROGRAM_TRY >= 10):
-#            error_end()
-#        else :
-#            #unittest.main()
-#            unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestNScreen))
-#    Generate_directory(2) 
-#    while(len(os.listdir("Sources/" + find_lastest_dir(2)))< OBJ_SCREENSHOT) :
-#        if(PROGRAM_TRY >= 10):
-#            error_end()
-#        else :
-#            #unittest.main()
-#            unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestNScreen))
 
     Generate_directory(1)
     unittest.TextTestRunner().run(unittest.TestLoader().loadTestsFromTestCase(TestNScreen))
@@ -147,8 +110,8 @@ def verify() :
             end()
         else :
             if(not SILENT) : print("Retrying : Try " + str(TRY) + "/3;")
-            shutil.rmtree("Sources/" + find_lastest_dir(1), ignore_errors=True)
-            shutil.rmtree("Sources/" + find_lastest_dir(2), ignore_errors=True)
+            shutil.rmtree("Screenshots/Sources/" + find_lastest_dir(1), ignore_errors=True)
+            shutil.rmtree("Screenshots/Sources/" + find_lastest_dir(2), ignore_errors=True)
             main()
     else :
         end()
@@ -186,7 +149,6 @@ def command_parse() :
         if('-s' in sys.argv) : SILENT = True
     for i in sys.argv :
         if(i != sys.argv[0]) :
-            #TO CHANGE maybe a tab, or something
             x = __import__(i)
             
 

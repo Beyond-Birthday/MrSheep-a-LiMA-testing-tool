@@ -60,7 +60,7 @@ class Tools() :
         t = datetime.datetime.date(datetime.datetime.now())
         t.strftime('%d-%m-%Y')
         t = str(t)
-        t = '../Sources/f_S-'+t
+        t = '../Screenshots/Sources/f_S-'+t
         FOLDER = t
         dir_path = os.path.dirname(os.path.realpath(__file__))
         dir_path = str(dir_path) + '/' + t
@@ -70,7 +70,7 @@ class Tools() :
             t = datetime.datetime.date(datetime.datetime.now())
             t.strftime('%d-%m-%Y')
             t = str(t)
-            t = '../Sources/s_S-'+t
+            t = '../Screenshots/Sources/s_S-'+t
             FOLDER = t
             dir_path = os.path.dirname(os.path.realpath(__file__))
             dir_path = str(dir_path) + '/' + t
@@ -84,8 +84,8 @@ class Tools() :
         t = datetime.datetime.date(datetime.datetime.now())
         t.strftime('%d-%m-%Y')
         t = str(t)
-        if(mode == 1 ) : t = '../Sources/f_S-'+t
-        if(mode == 2 ) : t = '../Sources/s_S-'+t
+        if(mode == 1 ) : t = '../Screenshots/Sources/f_S-'+t
+        if(mode == 2 ) : t = '../Screenshots/Sources/s_S-'+t
         FOLDER = t
         dir_path = os.path.dirname(os.path.realpath(__file__))
         dir_path = str(dir_path) + '/' + t
@@ -129,8 +129,8 @@ class Tools() :
         f = open("Analysis/" + output, 'w')
     
         cwd = os.getcwd()
-        dir1 = cwd + '/Sources/' + directory_1
-        dir2 = cwd + '/Sources/' + directory_2
+        dir1 = cwd + '/Screenshots/Sources/' + directory_1
+        dir2 = cwd + '/Screenshots/Sources/' + directory_2
         if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
             if(not SILENT) : print("Not the same number of screenshots, trying anyway ...")
             if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :

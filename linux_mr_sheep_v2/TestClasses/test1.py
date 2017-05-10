@@ -82,7 +82,7 @@ class TestClass(unittest.TestCase):
         
         elem.send_keys(Keys.RETURN)
         
-        PAGE = "2_log_homepage"
+        mslT.Set_Current_Page("2_log_homepage")
         #-- HOMEPAGE (logged) --
         
         for i in range (0, mslWDT.get_max_Y(driver) + 1) :
@@ -90,9 +90,9 @@ class TestClass(unittest.TestCase):
             mslWDT.take_screenshot(driver)
             
         driver.execute_script("window.scrollTo(0, 0)")
-        time.sleep(WIP_SPEED)
+        time.sleep(0.2)
         
-        PAGE = "3_Try_a_new_metaanalysis"
+        mslT.Set_Current_Page("3_Try_a_new_metaanalysis")
         #-- TRY A NEW METAANALYSIS PAGE --
         
         driver.find_element_by_link_text("try a new meta-analysis").click()
@@ -127,7 +127,7 @@ class TestClass(unittest.TestCase):
             
         mslWDT.take_screenshot(driver)
         
-        PAGE = "4_editing_locally"
+        mslT.Set_Current_Page("4_editing_locally")
         #-- see edited meta analyses and papers --
 
         driver.find_element_by_link_text("see the meta-analyses and papers you've edited locally").click()
@@ -138,16 +138,16 @@ class TestClass(unittest.TestCase):
             EC.presence_of_element_located((By.ID, "personalinfo"))
             
         )
-        finally :
-            #driver.refresh()
-            if(not SILENT) : print('< (meep)')
+        except :
+            print('error loading static content')
+            driver.refresh()
         
         mslWDT.take_screenshot(driver)
         
         driver.back()
         mslWDT.take_screenshot(driver)
         
-        PAGE = "5_misinformation_effect"
+        mslT.Set_Current_Page("5_misinformation_effect")
         #-- See misinformation paper --
 
 
@@ -161,18 +161,19 @@ class TestClass(unittest.TestCase):
         )
         except :
             print('error loading static content')
+            driver.refresh()
         
-        for i in range (0, get_max_Y(driver)+1) :
+        for i in range (0, mslWDT.get_max_Y(driver)+1) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
-            take_screenshot(driver)
+            mslWDT.take_screenshot(driver)
 
         driver.execute_script("window.scrollTo(0, 0)")
-        time.sleep(WIP_SPEED)
+        time.sleep(0.2)
         
         driver.back()
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
-        PAGE = "6_simple_testing_metaanalysis"
+        mslT.Set_Current_Page("6_simple_testing_metaanalysis")
         #-- See Simple testing metaanalysis paper --
 
         driver.find_element_by_link_text("Simple testing metaanalysis").click()
@@ -183,19 +184,19 @@ class TestClass(unittest.TestCase):
             EC.presence_of_element_located((By.ID, "metaanalysis"))
             
         )
-        finally :
+        except :
+            print('error loading static content')
             driver.refresh()
-            if(not SILENT) : print('< (meep)')
         
         for i in range (0, 4) :
             driver.execute_script("window.scrollTo(0, "+ str(200*i)+")")
-            take_screenshot(driver)
+            mslWDT.take_screenshot(driver)
             
         driver.execute_script("window.scrollTo(0, 0)")
         
-        time.sleep(WIP_SPEED)
+        time.sleep(0.2)
         driver.back()
-        take_screenshot(driver)
+        mslWDT.take_screenshot(driver)
         
     
 #--------------DRIVER QUITTING----------------------
