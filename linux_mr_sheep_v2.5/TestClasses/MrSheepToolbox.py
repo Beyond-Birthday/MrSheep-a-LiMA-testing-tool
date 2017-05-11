@@ -52,6 +52,11 @@ class Toolbox() :
             print("compare")
         elif(MODE == "SOURCE") :
             print("source")
+            MAIN_DIRECTORY = self.get_last_dir()
+            print(MAIN_DIRECTORY)
+            SCREENSHOT_DIRECTORY = MAIN_DIRECTORY + "/Screenshots"
+            os.makedirs(SCREENSHOT_DIRECTORY)
+            print(SCREENSHOT_DIRECTORY)
         else :
             print("UNKNOW MODE ERROR")
             

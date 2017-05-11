@@ -18,6 +18,7 @@ TITLE = True
 TEST_CLASSES = []
 MODE = "RUN"
 
+
 class sheepUtils():
     def list_test_classes(self) :
         for i in os.listdir('TestClasses/') :
@@ -30,9 +31,12 @@ class sheepUtils():
                 return True
         return False
 
-    def Generate_directory(self) :
+    def generate_directory(self, nTime) :
         directory = str((datetime.datetime.date(datetime.datetime.now())).strftime('%d-%m-%Y'))
-        directory = MODE + "-" + directory
+        if(MODE == "SOURCE") :
+            directory = MODE + "-" + nTime + "-" + directory
+        else :
+            directory = MODE + "-" + directory
         for i in TEST_CLASSES :
             directory = directory + "-" + i
         directory = 'Results/'+directory
@@ -120,20 +124,26 @@ def command_parse() :
 
 def main() :
     title()
-    utils.Generate_directory()
     
     if(MODE == "RUN" ) :
+        utils.generate_directory("")
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
     elif(MODE == "COMPARE") :
+        utils.generate_directory("")
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
     elif(MODE == "SOURCE") :
+        utils.generate_directory("f")
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
-            unittest.TextTestRunner(verbosity=2).run(suite)
+            unittest.TextTestRunner(verbosity=0).run(suite)
+        utils.generate_directory("s")
+        for tClass in TEST_CLASSES :
+            suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
+            unittest.TextTestRunner(verbosity=1).run(suite)
     else :
         print("UNKNOW MODE ERROR : Please contact the author")
         sys.exit(0)

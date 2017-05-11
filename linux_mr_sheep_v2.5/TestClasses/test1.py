@@ -10,9 +10,6 @@ import os
 
 import MrSheepToolbox
 
-toolbox = MrSheepToolbox.Toolbox()
-toolbox.init1(os.path.basename(__file__))
-
 
 
 
@@ -26,6 +23,9 @@ class TestClass(unittest.TestCase):
     
     def setUp(self):
         self.driver = webdriver.Chrome() 
+        self.toolbox = MrSheepToolbox.Toolbox()
+        self.toolbox.init1(os.path.basename(__file__))
+        
         
 
 #--------------BASIC TESTS----------------------
@@ -33,6 +33,7 @@ class TestClass(unittest.TestCase):
     def test_basics(self):
         #Write your tests here !
         driver = self.driver
+        toolbox = self.toolbox
         driver.get('https://lima.soc.port.ac.uk/')
         toolbox.take_screenshot(driver)
         toolbox.get_max_Y(driver)
