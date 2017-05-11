@@ -23,10 +23,6 @@ class sheepUtils():
         for i in os.listdir('TestClasses/') :
             if 'test' in i : print(i[:(len(i)-3)])
         sys.exit(0)
-    
-    def list_test_classes(self) :
-        for i in os.listdir('TestClasses/') :
-            if 'test' in i : print(i[:(len(i)-3)])
         
     def find_test_class(self, name) :
         for i in os.listdir('TestClasses/') :
