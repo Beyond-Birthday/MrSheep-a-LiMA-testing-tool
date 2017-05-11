@@ -53,10 +53,19 @@ class Toolbox() :
         elif(MODE == "SOURCE") :
             print("source")
             MAIN_DIRECTORY = self.get_last_dir()
-            print(MAIN_DIRECTORY)
+            
             SCREENSHOT_DIRECTORY = MAIN_DIRECTORY + "/Screenshots"
-            os.makedirs(SCREENSHOT_DIRECTORY)
+            if not os.path.exists(SCREENSHOT_DIRECTORY):
+                os.makedirs(SCREENSHOT_DIRECTORY)
+            if not os.path.exists(SCREENSHOT_DIRECTORY + "/First_run"):
+                os.makedirs(SCREENSHOT_DIRECTORY + "/First_run")
+                SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/First_run"
+            else :
+                os.makedirs(SCREENSHOT_DIRECTORY + "/Second_run")
+                SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/Second_run"
+            
             print(SCREENSHOT_DIRECTORY)
+
         else :
             print("UNKNOW MODE ERROR")
             

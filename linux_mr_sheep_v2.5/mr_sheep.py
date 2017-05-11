@@ -31,10 +31,10 @@ class sheepUtils():
                 return True
         return False
 
-    def generate_directory(self, nTime) :
+    def generate_directory(self) :
         directory = str((datetime.datetime.date(datetime.datetime.now())).strftime('%d-%m-%Y'))
         if(MODE == "SOURCE") :
-            directory = MODE + "-" + nTime + "-" + directory
+            directory = MODE + "-" + directory
         else :
             directory = MODE + "-" + directory
         for i in TEST_CLASSES :
@@ -126,21 +126,20 @@ def main() :
     title()
     
     if(MODE == "RUN" ) :
-        utils.generate_directory("")
+        utils.generate_directory()
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
     elif(MODE == "COMPARE") :
-        utils.generate_directory("")
+        utils.generate_directory()
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=2).run(suite)
     elif(MODE == "SOURCE") :
-        utils.generate_directory("f")
+        utils.generate_directory()
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=0).run(suite)
-        utils.generate_directory("s")
         for tClass in TEST_CLASSES :
             suite = unittest.TestLoader().loadTestsFromTestCase(__import__(tClass).TestClass)
             unittest.TextTestRunner(verbosity=1).run(suite)
