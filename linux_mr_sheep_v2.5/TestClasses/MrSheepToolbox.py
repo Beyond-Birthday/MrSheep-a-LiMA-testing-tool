@@ -1,21 +1,10 @@
 from functools import reduce
 import math, operator
 import os
-from os import listdir
 from PIL import Image
 from PIL import ImageChops
-from pyvirtualdisplay import Display
-from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 import shutil
-import sys
 import time
-import unittest
 
 
 MODE = ""
@@ -56,10 +45,12 @@ class Toolbox() :
                 return psd
                 break
 
+
     def init1(self, filename) :
         global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME, SOURCE_DIRECTORY
         CURRENT_FILE_NAME = filename.split(".")[0]
         MODE = self.get_mode()
+        print(filename)
         if(MODE == "RUN") :
             print("run mode")
             MAIN_DIRECTORY = self.get_last_dir()
@@ -83,13 +74,18 @@ class Toolbox() :
                 os.makedirs(SCREENSHOT_DIRECTORY)
             if not os.path.exists(SCREENSHOT_DIRECTORY + "/First_run"):
                 os.makedirs(SCREENSHOT_DIRECTORY + "/First_run")
-                SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/First_run"
             else :
-                if(os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run")) :
+                if(not os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run") and (CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[4])) :
                     os.makedirs(SCREENSHOT_DIRECTORY + "/Second_run")
+
+            if(os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run")):
                 SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/Second_run"
+            else :
+                SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/First_run"
         else :
             print("UNKNOW MODE ERROR")
+
+    #---------------POST PROCESS PART ------------------------
 
     def post_process(self) :
         if(MODE == "RUN") :
@@ -182,7 +178,11 @@ class Toolbox() :
     #-----------ANALYSIS PART ----------------------------------
 
     def fill_analysis(self, directory_1, directory_2) :
-        f = open(MAIN_DIRECTORY + "/output.txt", 'w')
+
+        if(os.path.isfile(MAIN_DIRECTORY + "/output.txt")) :
+            f = open(MAIN_DIRECTORY + "/output.txt", 'a')
+        else :
+            f = open(MAIN_DIRECTORY + "/output.txt", 'w')
 
 
         dir1 = directory_1
@@ -209,5 +209,4 @@ class Toolbox() :
                 str_result = str(self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis"))
                 str_t = str(os.listdir(dir1)[i]) + " " + str_result + "\n"
                 f.write(str_t)
-
         f.close()

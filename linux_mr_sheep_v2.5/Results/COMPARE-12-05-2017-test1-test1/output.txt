@@ -1,3 +1,0 @@
-test1-default1.png 0.0
-test1-test1.png 0.0
-test1-default0.png 0.0
