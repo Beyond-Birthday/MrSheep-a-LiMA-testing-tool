@@ -48,7 +48,7 @@ class sheepUtils():
             i = 1
             new_path = dir_path
             while(os.path.exists(new_path)) :
-                new_path = dir_path + "(" + str(i) + ")"
+                new_path = dir_path + "- (" + str(i) + ")"
                 i += 1
             os.makedirs(new_path)
 

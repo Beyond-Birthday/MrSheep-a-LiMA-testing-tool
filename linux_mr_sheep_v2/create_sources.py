@@ -23,12 +23,8 @@ TRIGGER = 0
 TRY = 0
 PROGRAM_TRY = 0
 
-INFO = False
-SILENT = False
+
 TITLE = True
-
-IMPORTS = []
-
 
 def title() :
     if(SILENT == False and TITLE == True) :
@@ -167,8 +163,6 @@ def command_parse() :
                 unittest.TextTestRunner(verbosity=2).run(suite)
             else :
                 print("testClass not found : " + i)
-            IMPORTS.append(i)
-            
 
 #--------------LAUNCH----------------------
 
@@ -176,7 +170,5 @@ if __name__ == "__main__":
     sys.path.insert(0, 'TestClasses/')
     command_parse()
     mslT.Generate_directory(1)
-    #TO CHANGE
-    #suite = unittest.TestLoader().loadTestsFromTestCase(__import__(sys.argv[1]).TestClass)
-    #unittest.TextTestRunner(verbosity=2).run(suite)
+    
     

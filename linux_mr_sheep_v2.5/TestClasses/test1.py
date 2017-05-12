@@ -20,13 +20,13 @@ import MrSheepToolbox
     ################################################
 
 class TestClass(unittest.TestCase):
-    
+
     def setUp(self):
-        self.driver = webdriver.Chrome() 
+        self.driver = webdriver.Chrome()
         self.toolbox = MrSheepToolbox.Toolbox()
         self.toolbox.init1(os.path.basename(__file__))
-        
-        
+
+
 
 #--------------BASIC TESTS----------------------
 
@@ -40,11 +40,12 @@ class TestClass(unittest.TestCase):
         toolbox.take_screenshot(driver)
         toolbox.set_current_title("test")
         toolbox.take_screenshot(driver)
-        
-        
-    
+
+
+
 #--------------DRIVER QUITTING----------------------
 
     def tearDown(self):
+        self.toolbox.post_process()
         self.driver.quit()
-   
+
