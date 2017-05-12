@@ -64,12 +64,14 @@ class Toolbox() :
             print("run mode")
             MAIN_DIRECTORY = self.get_last_dir()
             SCREENSHOT_DIRECTORY = MAIN_DIRECTORY + "/Screenshots"
-            os.makedirs(SCREENSHOT_DIRECTORY)
+            if not os.path.exists(SCREENSHOT_DIRECTORY):
+                os.makedirs(SCREENSHOT_DIRECTORY)
         elif(MODE == "COMPARE") :
             print("compare mode")
             MAIN_DIRECTORY = self.get_last_dir()
             SCREENSHOT_DIRECTORY = MAIN_DIRECTORY + "/Screenshots"
-            os.makedirs(SCREENSHOT_DIRECTORY)
+            if not os.path.exists(SCREENSHOT_DIRECTORY):
+                os.makedirs(SCREENSHOT_DIRECTORY)
             SOURCE_DIRECTORY = self.get_last_source_dir()
 
         elif(MODE == "SOURCE") :
@@ -94,6 +96,10 @@ class Toolbox() :
             print("run mode")
         elif(MODE == "COMPARE"):
             print("compare mode")
+            print(MAIN_DIRECTORY)
+            print(SCREENSHOT_DIRECTORY)
+            print(SOURCE_DIRECTORY)
+            self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
         elif(MODE == "SOURCE") :
             print("source mode")
         else :
@@ -175,13 +181,15 @@ class Toolbox() :
 
     #-----------ANALYSIS PART ----------------------------------
 
-    def fill_analysis(self, directory_1, directory_2, output) :
-        f = open("Analysis/" + output, 'r+').truncate()
-        f = open("Analysis/" + output, 'w')
+    def fill_analysis(self, directory_1, directory_2) :
+        f = open(MAIN_DIRECTORY + "/output.txt", 'w')
 
-        cwd = os.getcwd()
-        dir1 = cwd + '/Sources/' + directory_1
-        dir2 = cwd + '/Sources/' + directory_2
+
+        dir1 = directory_1
+        if(MODE == "COMPARE") :
+            dir2 = "Results/" + SOURCE_DIRECTORY + "/Screenshots/First_run/"
+
+
         if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
             if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :
                 for i in range(0, len(os.listdir(dir2))) :

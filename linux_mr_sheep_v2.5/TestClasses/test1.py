@@ -48,4 +48,3 @@ class TestClass(unittest.TestCase):
     def tearDown(self):
         self.toolbox.post_process()
         self.driver.quit()
-
