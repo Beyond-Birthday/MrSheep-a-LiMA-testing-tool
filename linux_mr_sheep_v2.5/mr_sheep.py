@@ -86,7 +86,6 @@ def title() :
                      """)
 
 
-
 def usage() :
     #print the usage of the script
     print("Here are the usages for this program :")
@@ -136,10 +135,6 @@ def command_parse() :
         TEST_CLASSES.sort()
         utils.security_name()     #Test if folder name is under 255 chars
 
-
-
-
-
 def main() :
     #Main method, print the title and run the tests according to the selected mode
     title()
@@ -166,8 +161,6 @@ def main() :
         print("UNKNOW MODE ERROR : Please contact the author")
         sys.exit(0)
     print("Program completed")
-
-
 
 if __name__ == "__main__":
     sys.path.insert(0, 'TestClasses/')
