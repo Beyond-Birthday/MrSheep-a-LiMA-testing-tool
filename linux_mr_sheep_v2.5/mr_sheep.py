@@ -24,7 +24,7 @@ class sheepUtils():
         for i in os.listdir('TestClasses/') :
             if 'test' in i : print(i[:(len(i)-3)])
         sys.exit(0)
-        
+
     def find_test_class(self, name) :
         for i in os.listdir('TestClasses/') :
             if ('test' in i and i[:(len(i)-3)] == name) :
@@ -67,7 +67,7 @@ def title() :
        `-'._.--._(             )
           |||  |||`-'._.--._.-'
                      |||  |||
-                     
+
 ################################################
                      """)
 
@@ -98,19 +98,20 @@ def command_parse() :
     global MODE
     global TITLE
     if(('-h' in sys.argv) or ('-u' in sys.argv)) : usage()
+    elif('-l' in sys.argv) :
+            utils.list_test_classes()
+            sys.exit(0)
     else :
         if('-t' in sys.argv) : TITLE = False
         if('-v' in sys.argv) :
             print("Virtual display activated")
             display = Display(visible=0, size=(800, 600))
             display.start()
-        if('-l' in sys.argv) : 
-            utils.list_test_classes()
         if('-c' in sys.argv) :
             MODE = "COMPARE"
         if('-s' in sys.argv) :
             MODE = "SOURCE"
-            
+
     for i in sys.argv :
         if(i != sys.argv[0] and len(i) > 3) :
             if(utils.find_test_class(i)) :
@@ -124,7 +125,7 @@ def command_parse() :
 
 def main() :
     title()
-    
+
     if(MODE == "RUN" ) :
         utils.generate_directory()
         for tClass in TEST_CLASSES :
@@ -146,7 +147,8 @@ def main() :
     else :
         print("UNKNOW MODE ERROR : Please contact the author")
         sys.exit(0)
-        
+    print("Program completed")
+
 
 
 if __name__ == "__main__":
@@ -154,4 +156,4 @@ if __name__ == "__main__":
     utils = sheepUtils()
     command_parse()
     main()
-    
+

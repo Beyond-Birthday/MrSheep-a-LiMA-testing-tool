@@ -5,6 +5,7 @@ from PIL import Image
 from PIL import ImageChops
 import shutil
 import time
+import sys
 
 
 MODE = ""
@@ -37,7 +38,6 @@ class Toolbox() :
         mtime = lambda f: os.stat(os.path.join("Results/", f)).st_mtime
         possible_source_directories = list(sorted(os.listdir("Results/"), key=mtime, reverse = True))
         for psd in possible_source_directories :
-            print(psd.split("-")[0])
             if(psd.split("-")[0] == "SOURCE" and psd.split("-")[4:].sort() == MAIN_DIRECTORY.split("/")[1].split("-")[4:].sort()) :
                 return psd
                 break
@@ -52,7 +52,6 @@ class Toolbox() :
         global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME, SOURCE_DIRECTORY, END
         CURRENT_FILE_NAME = filename.split(".")[0]
         MODE = self.get_mode()
-        print(filename)
         if(MODE == "RUN") :
             print("run mode")
             MAIN_DIRECTORY = self.get_last_dir()
@@ -96,29 +95,21 @@ class Toolbox() :
                 SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/First_run"
         else :
             print("UNKNOW MODE ERROR")
+            sys.exit(0)
 
     #---------------POST PROCESS PART ------------------------
 
     def post_process(self) :
-        if(MODE == "RUN") :
-            print("run mode")
-        elif(MODE == "COMPARE"):
-            print("compare mode")
-            print(MAIN_DIRECTORY)
-            print(SCREENSHOT_DIRECTORY)
-            print(SOURCE_DIRECTORY)
+        if(MODE == "COMPARE"):
             if(END) :
                 self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
                 self.run_percent_analysis()
         elif(MODE == "SOURCE") :
-            print("source mode")
-            print(MAIN_DIRECTORY)
-            print(SCREENSHOT_DIRECTORY)
-            print(END)
             if(END) :
                 self.fill_analysis(MAIN_DIRECTORY + "/Screenshots/First_run/", MAIN_DIRECTORY + "/Screenshots/Second_run/")
         else :
             print("UNKNOW MODE ERROR")
+            sys.exit(0)
 
     #-------------------WEB TESTING PART ---------------------
 
@@ -237,7 +228,6 @@ class Toolbox() :
         problem_files = []
         source_percent_txt = "Results/" + SOURCE_DIRECTORY + "/output.txt"
         test_percent_txt = MAIN_DIRECTORY + "/output.txt"
-        print(source_percent_txt)
         with open(source_percent_txt) as f:
             source_tab = f.readlines()
         source_tab = [x.strip() for x in source_tab]
