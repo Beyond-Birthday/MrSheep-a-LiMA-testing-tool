@@ -7,18 +7,18 @@ import shutil
 import time
 import sys
 
+#-----------------VARIABLES ------------------
+MODE = ""                                   #Current mode
+MAIN_DIRECTORY = ""                         #Main directory : Output directory
+SCREENSHOT_DIRECTORY = ""                   #Screenshot directory : Main directory/Screenshot directory
+SOURCE_DIRECTORY = " "                      #Source directory : Only in compare mode, get the first run screenshot directory
+CURRENT_FILE_NAME = ""                      #Current file name : name of the test class
 
-MODE = ""
-MAIN_DIRECTORY = ""
-SCREENSHOT_DIRECTORY = ""
-SOURCE_DIRECTORY = " "
-CURRENT_FILE_NAME = ""
+TITLE = "default"                           #Title for the screenshots : default = default
+CURRENT_SCREENSHOT = 0                      #Current screenshot number
+SPEED = 0.2                                 #Current speed
 
-TITLE = "default"
-CURRENT_SCREENSHOT = 0
-SPEED = 0.2
-
-END = False
+END = False                                 #Test if the program has to end
 
 
 class Toolbox() :
@@ -26,13 +26,16 @@ class Toolbox() :
     #-------------------- INIT PART------------------------
 
     def get_mode(self) :
+        #Get the mode required for this testClass
         last_dir_name = max([os.path.join("Results/", d) for d in os.listdir("Results/")], key=os.path.getmtime)
         return (last_dir_name.split("-")[0].split("/")[1])
 
     def get_last_dir(self) :
+        #Get the lastest directory created by the program or the user
         return (max([os.path.join("Results/",d) for d in os.listdir("Results/")], key=os.path.getmtime))
 
     def get_last_source_dir(self) :
+        #Get the lastest source directory with the same testClasses
         global SOURCE_DIRECTORY
         possible_source_directories = []
         mtime = lambda f: os.stat(os.path.join("Results/", f)).st_mtime
@@ -49,6 +52,7 @@ class Toolbox() :
 
 
     def init1(self, filename) :
+        #initialize variables
         global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME, SOURCE_DIRECTORY, END
         CURRENT_FILE_NAME = filename.split(".")[0]
         MODE = self.get_mode()
@@ -69,11 +73,9 @@ class Toolbox() :
                         (CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[-2] and
                          MAIN_DIRECTORY.split("/")[1].split("-")[-1][-1] == ')')) :
                 END = True
-
         elif(MODE == "SOURCE") :
             print("source mode")
             MAIN_DIRECTORY = self.get_last_dir()
-
             SCREENSHOT_DIRECTORY = MAIN_DIRECTORY + "/Screenshots"
             if not os.path.exists(SCREENSHOT_DIRECTORY):
                 os.makedirs(SCREENSHOT_DIRECTORY)
@@ -100,6 +102,7 @@ class Toolbox() :
     #---------------POST PROCESS PART ------------------------
 
     def post_process(self) :
+        #Post processing : do analysis if needed
         if(MODE == "COMPARE"):
             if(END) :
                 self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
@@ -114,22 +117,27 @@ class Toolbox() :
     #-------------------WEB TESTING PART ---------------------
 
     def set_current_title(self, title) :
+        #set the title for the screenshots
         global TITLE, CURRENT_SCREENSHOT
         CURRENT_SCREENSHOT = 0
         TITLE = title
 
     def get_current_title(self) :
+        #getter for the title
         return TITLE
 
     def set_speed(self, speed) :
+        #speed setter
         global SPEED
         SPEED = speed
         return 0
 
     def get_speed(self) :
+        #speed getter
         return SPEED
 
     def take_screenshot(self, driver) :
+        #take screenshot and save it to the right directory
         global CURRENT_SCREENSHOT
         time.sleep(SPEED)
         path = SCREENSHOT_DIRECTORY + "/" + CURRENT_FILE_NAME + "-" +TITLE + str(CURRENT_SCREENSHOT) + ".png"
@@ -138,18 +146,16 @@ class Toolbox() :
         time.sleep(SPEED)
 
     def get_max_Y(self, driver) :
+        #get the max Y or lenght of a webpage
         global SPEED
-
         old_speed = SPEED
         SPEED = 0.01
-
         y = 0
         continu = True
         dir_path = MAIN_DIRECTORY + '/TEMP/'
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         driver.refresh()
-
         while(continu) :
             y = y + 1
             driver.execute_script("window.scrollTo(0, "+ str(200*y)+")")
@@ -170,6 +176,7 @@ class Toolbox() :
     #---------------IMAGE PROCESSING PART ----------------
 
     def compareTwoImages(self, pathToImgTest, pathToImgSource, mode) :
+        #compares two images using RMS method
         rms = 0
         imgTest = Image.open(pathToImgTest)
         imgSource = Image.open(pathToImgSource)
@@ -188,20 +195,17 @@ class Toolbox() :
     #-----------ANALYSIS PART ----------------------------------
 
     def fill_analysis(self, directory_1, directory_2) :
-
+        #fill output.txt
         if(os.path.isfile(MAIN_DIRECTORY + "/output.txt")) :
             f = open(MAIN_DIRECTORY + "/output.txt", 'a')
         else :
             f = open(MAIN_DIRECTORY + "/output.txt", 'w')
-
         if(MODE == "COMPARE") :
             dir1 = directory_1
             dir2 = "Results/" + SOURCE_DIRECTORY + "/Screenshots/First_run/"
-
         elif(MODE == "SOURCE") :
             dir1 = directory_1
             dir2 = directory_2
-
         if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
             if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :
                 for i in range(0, len(os.listdir(dir2))) :
@@ -224,6 +228,7 @@ class Toolbox() :
         f.close()
 
     def run_percent_analysis(self) :
+        #run an output analysis
         ERRORS = 0
         problem_files = []
         source_percent_txt = "Results/" + SOURCE_DIRECTORY + "/output.txt"
@@ -231,11 +236,9 @@ class Toolbox() :
         with open(source_percent_txt) as f:
             source_tab = f.readlines()
         source_tab = [x.strip() for x in source_tab]
-
         with open(test_percent_txt) as f:
             test_tab = f.readlines()
             test_tab = [x.strip() for x in test_tab]
-
         if(len(test_tab) != len(source_tab)) :
             print("Not the same length ..." )
             if(len(test_tab) < len(source_tab)) :
@@ -254,6 +257,5 @@ class Toolbox() :
             print("These files caused errors :")
             for i in problem_files :
                 print(i)
-
         else :
             print("Tests completed with a precision of 96%")
