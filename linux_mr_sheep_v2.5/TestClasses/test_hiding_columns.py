@@ -39,14 +39,17 @@ class TestClass(unittest.TestCase):
         toolbox.set_current_title("0_HidingScenario")
 
         driver.delete_all_cookies()
-        driver.get('https://lima.soc.port.ac.uk/')
+        driver.get('localhost:8080')
+        driver.maximize_window()
 
         elem = driver.find_element_by_id("invitecode")
-        elem.send_keys("24146a0b3f2e")
+        elem.send_keys("foo")
 
         toolbox.take_screenshot(driver)
 
         elem.send_keys(Keys.RETURN)
+        
+        time.sleep(3)
 
         driver.find_element_by_link_text("Misinformation effect").click()
         driver.refresh()
@@ -61,39 +64,22 @@ class TestClass(unittest.TestCase):
 
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing')]/section[@id='metaanalysis']/header/a[contains(@class, 'edityourcopy')]").click()
         time.sleep(0.2)
-
-        driver.find_element_by_xpath("(//SPAN[@class='coltitle'][text()='Specification'][text()='Specification'])[1]").click()
-
-        driver.find_element_by_xpath("((//BUTTON[@class='not-unsaved hide editing'][text()='hide'][text()='hide'])[1]/../..//SPAN[@class='coltitle'][text()='Specification'][text()='Specification'][text()='Specification'])[1]").click()
-
-        driver.find_element_by_xpath("(//SPAN[@class='coltitle'][text()='Specification'][text()='Specification'])[1]/../..//BUTTON[@class='not-unsaved hide editing'][text()='hide'][text()='hide']").click()
-
+        
+        driver.find_element_by_xpath("//SPAN[@class='coltitle'][text()='Control [N]'][text()='Control [N]']/self::SPAN").click()
         toolbox.take_screenshot(driver)
-
-        driver.find_element_by_xpath("(//DIV[@class='unhide editing'][text()='◄ ►'][text()='◄ ►'])[1]").click()
-
-        toolbox.take_screenshot(driver)
-
-        driver.find_element_by_xpath("(//SPAN[@class='coltitle'][text()='Control [N]'][text()='Control [N]'])[1]").click()
-
-        time.sleep(1)
-
+        
         driver.find_element_by_xpath("(//SPAN[@class='coltitle'][text()='Control [N]'][text()='Control [N]'])[1]/../..//BUTTON[@class='not-unsaved hide editing'][text()='hide'][text()='hide']").click()
-
-        driver.find_element_by_tag_name('body').send_keys(Keys.F12)
-
-        time.sleep(2)
-
-
-        driver.find_element_by_xpath("(//DIV[@class='unhide editing'][text()='◄ ►'][text()='◄ ►'])[6]").click()
-
         toolbox.take_screenshot(driver)
-
+        
+        driver.find_element_by_xpath("(//DIV[@class='unhide editing'])[6]").click()
+        toolbox.take_screenshot(driver)
+        
         try :
-            driver.find_element_by_xpath("(//DIV[@class='unhide editing'][text()='◄ ►'][text()='◄ ►'])[6]").click()
+            driver.find_element_by_xpath("(//DIV[@class='unhide editing'])[6]").click()
         except :
-            print("this test works")
-            exit(0)
+            print("The test works")
+        
+        
         for entry in driver.get_log('browser'):
             print(entry)
 

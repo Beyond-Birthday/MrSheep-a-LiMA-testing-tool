@@ -1,9 +1,0 @@
-test1-default1.png 1.6225261455882334
-test1-default0.png 1.6225261455882334
-test1-test0.png 0.0
-test2-test1.png 0.0
-test1-default1.png 0.0
-test1-default0.png 0.0
-test2-test0.png 1.6225261455882334
-test1-test0.png 0.0
-test2-test2.png 1.6225261455882334

@@ -110,7 +110,7 @@ class Toolbox() :
         elif(MODE == "SOURCE") :
             if(END) :
                 self.fill_analysis(MAIN_DIRECTORY + "/Screenshots/First_run/", MAIN_DIRECTORY + "/Screenshots/Second_run/")
-        else :
+        elif(MODE != "RUN") :
             print("UNKNOW MODE ERROR")
             sys.exit(0)
 
