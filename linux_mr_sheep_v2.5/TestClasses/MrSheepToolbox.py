@@ -17,6 +17,8 @@ TITLE = "default"
 CURRENT_SCREENSHOT = 0
 SPEED = 0.2
 
+END = False
+
 
 class Toolbox() :
 
@@ -47,7 +49,7 @@ class Toolbox() :
 
 
     def init1(self, filename) :
-        global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME, SOURCE_DIRECTORY
+        global MODE, MAIN_DIRECTORY, SCREENSHOT_DIRECTORY, CURRENT_FILE_NAME, SOURCE_DIRECTORY, END
         CURRENT_FILE_NAME = filename.split(".")[0]
         MODE = self.get_mode()
         print(filename)
@@ -64,6 +66,10 @@ class Toolbox() :
             if not os.path.exists(SCREENSHOT_DIRECTORY):
                 os.makedirs(SCREENSHOT_DIRECTORY)
             SOURCE_DIRECTORY = self.get_last_source_dir()
+            if((CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[-1]) or
+                        (CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[-2] and
+                         MAIN_DIRECTORY.split("/")[1].split("-")[-1][-1] == ')')) :
+                END = True
 
         elif(MODE == "SOURCE") :
             print("source mode")
@@ -77,6 +83,12 @@ class Toolbox() :
             else :
                 if(not os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run") and (CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[4])) :
                     os.makedirs(SCREENSHOT_DIRECTORY + "/Second_run")
+                if(os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run")) :
+
+                    if((CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[-1]) or
+                        (CURRENT_FILE_NAME == MAIN_DIRECTORY.split("/")[1].split("-")[-2] and
+                         MAIN_DIRECTORY.split("/")[1].split("-")[-1][-1] == ')')) :
+                        END = True
 
             if(os.path.exists(SCREENSHOT_DIRECTORY + "/Second_run")):
                 SCREENSHOT_DIRECTORY = SCREENSHOT_DIRECTORY + "/Second_run"
@@ -95,9 +107,16 @@ class Toolbox() :
             print(MAIN_DIRECTORY)
             print(SCREENSHOT_DIRECTORY)
             print(SOURCE_DIRECTORY)
-            self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
+            if(END) :
+                self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
+                self.run_percent_analysis()
         elif(MODE == "SOURCE") :
             print("source mode")
+            print(MAIN_DIRECTORY)
+            print(SCREENSHOT_DIRECTORY)
+            print(END)
+            if(END) :
+                self.fill_analysis(MAIN_DIRECTORY + "/Screenshots/First_run/", MAIN_DIRECTORY + "/Screenshots/Second_run/")
         else :
             print("UNKNOW MODE ERROR")
 
@@ -184,11 +203,13 @@ class Toolbox() :
         else :
             f = open(MAIN_DIRECTORY + "/output.txt", 'w')
 
-
-        dir1 = directory_1
         if(MODE == "COMPARE") :
+            dir1 = directory_1
             dir2 = "Results/" + SOURCE_DIRECTORY + "/Screenshots/First_run/"
 
+        elif(MODE == "SOURCE") :
+            dir1 = directory_1
+            dir2 = directory_2
 
         if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
             if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :
@@ -210,3 +231,39 @@ class Toolbox() :
                 str_t = str(os.listdir(dir1)[i]) + " " + str_result + "\n"
                 f.write(str_t)
         f.close()
+
+    def run_percent_analysis(self) :
+        ERRORS = 0
+        problem_files = []
+        source_percent_txt = "Results/" + SOURCE_DIRECTORY + "/output.txt"
+        test_percent_txt = MAIN_DIRECTORY + "/output.txt"
+        print(source_percent_txt)
+        with open(source_percent_txt) as f:
+            source_tab = f.readlines()
+        source_tab = [x.strip() for x in source_tab]
+
+        with open(test_percent_txt) as f:
+            test_tab = f.readlines()
+            test_tab = [x.strip() for x in test_tab]
+
+        if(len(test_tab) != len(source_tab)) :
+            print("Not the same length ..." )
+            if(len(test_tab) < len(source_tab)) :
+                for i in range(0, len(test_tab)) :
+                    if((float(test_tab[i].split(" ")[1]) - 4 > float(source_tab[i].split(" ")[1]))) :
+                        ERRORS = ERRORS + 1
+                        problem_files.append(test_tab[i].split(" ")[0])
+        else :
+            print("Same number of screenshots, processing...")
+            for i in range(0, len(test_tab)) :
+                if(float(test_tab[i].split(" ")[1]) - float(source_tab[i].split(" ")[1]) > 4) :
+                    ERRORS = ERRORS + 1
+                    problem_files.append(test_tab[i].split(" ")[0])
+
+        if(ERRORS > 0) :
+            print("These files caused errors :")
+            for i in problem_files :
+                print(i)
+
+        else :
+            print("Tests completed with a precision of 96%")
