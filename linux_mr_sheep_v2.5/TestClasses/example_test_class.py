@@ -1,18 +1,11 @@
 from selenium import webdriver
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.alert import Alert
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.wait import WebDriverWait
 import unittest
+import os
 
 import MrSheepToolbox
 
 
-mslWDT = MrSheepToolbox.WebDriverTools()
-mslT = MrSheepToolbox.Tools()
-mslT.Init_directory()
+
 
     ################################################
     #----------------------------------------------#
@@ -21,18 +14,26 @@ mslT.Init_directory()
     ################################################
 
 class TestClass(unittest.TestCase):
-    
+
     def setUp(self):
-        self.driver = webdriver.Chrome() 
+        self.driver = webdriver.Chrome()
+        self.toolbox = MrSheepToolbox.Toolbox()
+        self.toolbox.init1(os.path.basename(__file__))
+
+
 
 #--------------BASIC TESTS----------------------
 
     def test_basics(self):
+        driver = self.driver
+        toolbox = self.toolbox
         #Write your tests here !
-        
-    
+        print("Meep")
+
+
+
 #--------------DRIVER QUITTING----------------------
 
     def tearDown(self):
+        self.toolbox.post_process()
         self.driver.quit()
-   
