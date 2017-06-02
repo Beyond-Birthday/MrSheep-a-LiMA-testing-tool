@@ -39,11 +39,16 @@ class TestClass(unittest.TestCase):
         toolbox.set_current_title("0_HidingScenario")
 
         driver.delete_all_cookies()
-        driver.get('localhost:8080')
+        #driver.get('localhost:8080')   de-comment to allow local
+        driver.get('https://lima.soc.port.ac.uk/')
+        
+        time.sleep(4)
+        
+        
         driver.maximize_window()
 
         elem = driver.find_element_by_id("invitecode")
-        elem.send_keys("foo")
+        elem.send_keys("24146a0b3f2e")
 
         toolbox.take_screenshot(driver)
 
@@ -63,7 +68,7 @@ class TestClass(unittest.TestCase):
             print("Failed to load dynamic element")
 
         driver.find_element_by_xpath("/html/body[contains(@class, 'editing')]/section[@id='metaanalysis']/header/a[contains(@class, 'edityourcopy')]").click()
-        time.sleep(0.2)
+        time.sleep(3)
         
         driver.find_element_by_xpath("//SPAN[@class='coltitle'][text()='Control [N]'][text()='Control [N]']/self::SPAN").click()
         toolbox.take_screenshot(driver)

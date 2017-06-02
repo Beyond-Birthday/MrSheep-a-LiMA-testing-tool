@@ -26,7 +26,7 @@ sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
 
 sudo apt-get install python3-pip
 
-pip3 install pyvirtualdisplay selenium
+sudo pip3 install pyvirtualdisplay selenium
 
 
 

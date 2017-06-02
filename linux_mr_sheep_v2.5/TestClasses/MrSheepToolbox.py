@@ -103,6 +103,7 @@ class Toolbox() :
 
     def post_process(self) :
         #Post processing : do analysis if needed
+        self.set_current_title('default')
         if(MODE == "COMPARE"):
             if(END) :
                 self.fill_analysis(SCREENSHOT_DIRECTORY, SOURCE_DIRECTORY)
