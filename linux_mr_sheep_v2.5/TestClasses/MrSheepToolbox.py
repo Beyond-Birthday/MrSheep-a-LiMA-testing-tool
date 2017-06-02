@@ -210,21 +210,21 @@ class Toolbox() :
         if(len(os.listdir(dir1)) != len(os.listdir(dir2))) :
             if(len(os.listdir(dir1)) > len(os.listdir(dir2))) :
                 for i in range(0, len(os.listdir(dir2))) :
-                    self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis")
-                    str_result = str(self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis"))
-                    str_t = str(os.listdir(dir1)[i]) + " " + str_result + "\n"
+                    self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis")
+                    str_result = str(self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis"))
+                    str_t = str(sorted(os.listdir(dir1))[i]) + " " + str_result + "\n"
                     f.write(str_t)
             else :
                 for i in range(0, len(os.listdir(dir1))) :
-                    self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis")
-                    str_result = str(self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis"))
-                    str_t = str(os.listdir(dir1)[i]) + " " + str_result + "\n"
+                    self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis")
+                    str_result = str(self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis"))
+                    str_t = str(sorted(os.listdir(dir1))[i]) + " " + str_result + "\n"
                     f.write(str_t)
         else :
             for i in range(0, len(os.listdir(dir1))) :
-                self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis")
-                str_result = str(self.compareTwoImages(str(dir1 + '/' + os.listdir(dir1)[i]), str(dir2 + '/' + os.listdir(dir2)[i]), "analysis"))
-                str_t = str(os.listdir(dir1)[i]) + " " + str_result + "\n"
+                self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis")
+                str_result = str(self.compareTwoImages(str(dir1 + '/' + sorted(os.listdir(dir1))[i]), str(dir2 + '/' + sorted(os.listdir(dir2))[i]), "analysis"))
+                str_t = str(sorted(os.listdir(dir1))[i]) + " " + str_result + "\n"
                 f.write(str_t)
         f.close()
 
